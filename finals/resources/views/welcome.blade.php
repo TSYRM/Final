@@ -1,59 +1,131 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Hilot Sarap</title>
-        <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    </head>
-    <body class="antialiased">
-        <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
-            <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
-                <div class="flex justify-center pt-8 sm:justify-start sm:pt-0">
-                    <h1 class="text-4xl font-bold text-indigo-600">Hilot Sarap</h1>
-                </div>
+@extends('layouts.app')
 
-                <div class="mt-8 bg-white dark:bg-gray-800 overflow-hidden shadow sm:rounded-lg">
-                    <div class="grid grid-cols-1 md:grid-cols-2">
-                        <div class="p-6">
-                            <div class="flex items-center">
-                                <div class="ml-4 text-lg leading-7 font-semibold">Welcome to Hilot Sarap</div>
-                            </div>
+@section('full_page_head')
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="csrf-token" content="{{ csrf_token() }}">
+<title>Hilot Sarap</title>
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- Custom styles -->
+<style>
+    .hero-section {
+        background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1600334129128-685c5582fd35?ixlib=rb-4.0.3');
+        background-size: cover;
+        background-position: center;
+        color: white;
+        padding: 100px 0;
+    }
+    .service-card {
+        transition: transform 0.3s;
+        height: 100%;
+    }
+    .service-card:hover {
+        transform: translateY(-5px);
+    }
+</style>
+@endsection
 
-                            <div class="ml-4">
-                                <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                                    Experience the authentic Filipino massage service. Book your appointment today for a relaxing experience!
-                                </div>
-                            </div>
-                        </div>
+@section('full_page')
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="/">Hilot Sarap</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#services">Services</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#registerModal">Register</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
 
-                        <div class="p-6 border-t border-gray-200 dark:border-gray-700 md:border-t-0 md:border-l">
-                            <div class="flex items-center">
-                                <div class="ml-4 text-lg leading-7 font-semibold">Our Services</div>
-                            </div>
+<!-- Hero Section -->
+<section class="hero-section text-center">
+    <div class="container">
+        <h1 class="display-4 fw-bold mb-4">Experience Authentic Filipino Massage</h1>
+        <p class="lead mb-5">Relax, rejuvenate, and restore your balance with our traditional healing techniques</p>
+        <div class="d-flex justify-content-center gap-3">
+            <button class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#loginModal">Book Now</button>
+            <button class="btn btn-outline-light btn-lg" data-bs-toggle="modal" data-bs-target="#registerModal">Create Account</button>
+        </div>
+    </div>
+</section>
 
-                            <div class="ml-4">
-                                <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                                    <ul class="list-disc pl-5">
-                                        <li>Traditional Filipino Massage</li>
-                                        <li>Aromatherapy Massage</li>
-                                        <li>Hot Stone Therapy</li>
-                                        <li>Foot Reflexology</li>
-                                        <li>Full Body Scrub</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
+<!-- Services Section -->
+<section id="services" class="py-5 bg-light">
+    <div class="container">
+        <h2 class="text-center mb-5">Our Services</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card service-card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Traditional Filipino Massage</h5>
+                        <p class="card-text">Experience the authentic healing touch that has been passed down through generations.</p>
                     </div>
                 </div>
-
-                <div class="flex justify-center mt-4 sm:items-center">
-                    <div class="ml-4 text-center text-sm text-gray-500 sm:text-right sm:ml-0">
-                        <a href="{{ route('login') }}" class="text-indigo-600 hover:text-indigo-900 mr-4">Login</a>
-                        <a href="{{ route('register') }}" class="text-indigo-600 hover:text-indigo-900">Register</a>
+            </div>
+            <div class="col-md-4">
+                <div class="card service-card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Aromatherapy Massage</h5>
+                        <p class="card-text">Enhance your massage experience with essential oils that promote relaxation and healing.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card service-card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Hot Stone Therapy</h5>
+                        <p class="card-text">Smooth, heated stones are used to release tension and promote deep relaxation.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card service-card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Foot Reflexology</h5>
+                        <p class="card-text">Targeted pressure points on the feet to promote healing throughout the body.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card service-card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Full Body Scrub</h5>
+                        <p class="card-text">Exfoliate and rejuvenate your skin with our traditional herbal scrubs.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card service-card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Ventosa (Cupping)</h5>
+                        <p class="card-text">Traditional cupping therapy to improve circulation and release muscle tension.</p>
                     </div>
                 </div>
             </div>
         </div>
-    </body>
-</html>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-dark text-light py-4">
+    <div class="container text-center">
+        <p class="mb-0">© 2025 Hilot Sarap. All rights reserved.</p>
+    </div>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+@endsection

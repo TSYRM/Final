@@ -1,15 +1,35 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\BookingController;
+use App\Http\Controllers\ServiceController;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Request;
 
-// Auth routes using closures instead of controllers
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider and all of them will
+| be assigned to the "web" middleware group. Make something great!
+|
+*/
+
+// Public routes
+Route::get('/', function() {
+    return view('welcome');
+})->name('home');
+
+// Auth routes - these are inline
 Route::middleware('guest')->group(function () {
     Route::get('register', function() {
-        return redirect()->back()->with('showRegisterModal', true);
+        return view('auth.register');
     })->name('register');
     
     Route::post('register', function(Request $request) {
@@ -31,7 +51,7 @@ Route::middleware('guest')->group(function () {
     });
     
     Route::get('login', function() {
-        return redirect()->back()->with('showLoginModal', true);
+        return view('auth.login');
     })->name('login');
     
     Route::post('login', function(Request $request) {
@@ -58,4 +78,14 @@ Route::middleware('auth')->group(function () {
         $request->session()->regenerateToken();
         return redirect('/');
     })->name('logout');
-});
+    
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    
+    // User booking routes
+    Route::resource('bookings', BookingController::class);
+    
+    // Admin routes
+    Route::middleware(['admin'])->group(function () {
+        Route::resource('services', ServiceController::class);
+    });
+}); 

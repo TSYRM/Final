@@ -2,17 +2,16 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
-// Auth routes using closures instead of controllers
+// Auth routes
 Route::middleware('guest')->group(function () {
     Route::get('register', function() {
-        return redirect()->back()->with('showRegisterModal', true);
+        return view('auth.register');
     })->name('register');
     
-    Route::post('register', function(Request $request) {
+    Route::post('register', function(\Illuminate\Http\Request $request) {
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
@@ -31,10 +30,10 @@ Route::middleware('guest')->group(function () {
     });
     
     Route::get('login', function() {
-        return redirect()->back()->with('showLoginModal', true);
+        return view('auth.login');
     })->name('login');
     
-    Route::post('login', function(Request $request) {
+    Route::post('login', function(\Illuminate\Http\Request $request) {
         $credentials = $request->validate([
             'email' => 'required|email',
             'password' => 'required',
@@ -52,10 +51,10 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
-    Route::post('logout', function(Request $request) {
+    Route::post('logout', function(\Illuminate\Http\Request $request) {
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return redirect('/');
     })->name('logout');
-});
+}); 

@@ -15,8 +15,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('service_id')->constrained()->onDelete('cascade');
-            $table->dateTime('booking_date');
-            $table->enum('status', ['pending', 'confirmed', 'cancelled', 'completed'])->default('pending');
+            $table->date('appointment_date');
+            $table->time('appointment_time');
+            $table->string('status')->default('pending');
             $table->text('notes')->nullable();
             $table->timestamps();
         });
@@ -29,4 +30,4 @@ return new class extends Migration
     {
         Schema::dropIfExists('bookings');
     }
-};
+}; 

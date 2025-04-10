@@ -1,3 +1,5 @@
+admin@gmail.com  
+admin123
 
 Group 8
 # ALEMAN, SAMANTHA
